@@ -6,9 +6,6 @@
     "start": "http-server -p 3000 ./build",
     "start2": "react-scripts start",
     "build": "react-scripts build && yarn run build-rename",
-    "deploy:create": "claudia create --handler lambda.handler --deploy-proxy-api --region us-east-1",
-    "deploy:update": "claudia update --handler lambda.handler --deploy-proxy-api --region us-east-1",
-    "deploy:destroy": "claudia destroy --handler lambda.handler --deploy-proxy-api --region us-east-1",
     "build-rename": "npm run build-rename-js && npm run build-rename-css",
     "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js' --replace 'main.js' build/static/js/*.js",
     "build-rename-css": "renamer --regex --find 'main\\.[^\\.]+\\.css' --replace 'main.css' build/static/css/*.css",
@@ -29,7 +26,6 @@
     ]
   },
   "dependencies": {
-    "aws-serverless-express": "^3.0.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
@@ -57,7 +53,6 @@
     "babel-jest": "^21.0.2",
     "chai": "^4.1.0",
     "chai-as-promised": "^7.1.1",
-    "claudia": "^2.14.1",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-15": "^1.0.0",
     "jest": "^21.0.2",
