@@ -48,5 +48,5 @@ jobs:
           name: Maybe Deploy to AWS Lambas
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              npm run deploy:update
+              echo "Deploy script goes here"
             fi
