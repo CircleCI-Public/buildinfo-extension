@@ -1,0 +1,10 @@
+{
+  "lambda": {
+    "role": "buildinfo-executor",
+    "name": "buildinfo",
+    "region": "us-east-1"
+  },
+  "api": {
+    "id": "54eckt95gi"
+  }
+}
