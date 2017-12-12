@@ -9,11 +9,10 @@
         "*://circleci.com/*"
       ],
       "css": [
-        "static/css/main.css"
       ],
       "js": [
         "inject.js",
-        "static/js/main.js"
+        "main.js"
       ]
     }
   ],
