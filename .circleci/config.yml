@@ -2,51 +2,6 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:6.10.3-browsers
+      - image: circleci/node
     steps:
       - checkout
-      - run:
-          name: Install Java 8
-          command: |
-            sudo apt update
-            sudo apt install software-properties-common
-            echo "y" | sudo add-apt-repository "deb http://ftp.debian.org/debian jessie-backports main"
-            sudo apt update
-            sudo apt install -t jessie-backports openjdk-8-jre openjdk-8-jre-headless ca-certificates-java
-            sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install NodeJS Dependencies
-          command: yarn install --production=false
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Run Test and Code Coverage
-          command: |
-            mkdir -p coverage
-            mkdir -p .nyc_output
-            mkdir -p test-artifacts
-            npm test
-      - store_artifacts:
-          path: test-artifacts
-          prefix: tests
-      - store_artifacts:
-          path: coverage
-          prefix: coverage
-      - store_test_results:
-          path: test-artifacts/junit
-      - run:
-          name: Build Production
-          command: npm run build
-      - store_artifacts:
-          path: build
-          prefix: build
-      - deploy:
-          name: Maybe Deploy to AWS Lambas
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              echo "Deploy script goes here"
-            fi

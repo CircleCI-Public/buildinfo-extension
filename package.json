@@ -1,74 +1,40 @@
 {
-  "name": "buildinfo",
-  "version": "1.1.0",
-  "main": "app.js",
+  "name": "buildinfo-extension",
+  "version": "0.0.1",
   "scripts": {
-    "start": "http-server -p 3000 ./build",
-    "start2": "react-scripts start",
-    "build": "react-scripts build && yarn run build-rename",
-    "build-rename": "npm run build-rename-js && npm run build-rename-css",
-    "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js' --replace 'main.js' build/static/js/*.js",
-    "build-rename-css": "renamer --regex --find 'main\\.[^\\.]+\\.css' --replace 'main.css' build/static/css/*.css",
-    "test": "jest src/ && codecov",
-    "test-web": "nyc --all wdio wdio.conf.js"
+    "webpack": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com:circleci/buildinfo.git"
   },
-  "author": "Joseph W Becher <jwbecher@drazisil.com>",
   "license": "MIT",
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "**/src/**/*.js"
-    ]
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "copy-webpack-plugin": "^4.2.3",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.5",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.10.0"
   },
   "dependencies": {
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.24.1",
-    "codecov": "^2.3.0",
-    "coffee-script": "^1.12.7",
-    "express": "^4.15.3",
-    "http-server": "^0.10.0",
-    "immutable": "^3.8.1",
-    "isomorphic-fetch": "^2.2.1",
-    "lodash": "^4.17.4",
-    "node-fetch": "^1.7.1",
-    "react": "^15.6.1",
-    "react-bootstrap": "^0.31.1",
-    "react-diff": "^0.0.7",
-    "react-dom": "^15.6.1",
+    "immutable": "^3.8.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-diff": "cezary/react-diff#12/head",
+    "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^1.0.10",
     "react-stickynode": "^1.4.0",
     "redux": "^3.7.2",
-    "redux-saga": "^0.15.6"
-  },
-  "devDependencies": {
-    "babel-jest": "^21.0.2",
-    "chai": "^4.1.0",
-    "chai-as-promised": "^7.1.1",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-15": "^1.0.0",
-    "jest": "^21.0.2",
-    "mocha": "^3.4.2",
-    "nyc": "^11.2.1",
-    "react-addons-test-utils": "^15.6.0",
-    "react-dom": "^15.6.1",
-    "react-test-renderer": "^15.6.1",
-    "redux-devtools": "^3.4.0",
     "redux-devtools-extension": "^2.13.2",
-    "regenerator-runtime": "^0.11.0",
-    "renamer": "^0.6.1",
-    "selenium-webdriver": "^3.5.0",
-    "wdio-junit-reporter": "^0.3.0",
-    "wdio-mocha-framework": "^0.5.10",
-    "wdio-selenium-standalone-service": "0.0.9",
-    "webdriverio": "^4.8.0"
+    "redux-saga": "^0.16.0"
   }
 }
