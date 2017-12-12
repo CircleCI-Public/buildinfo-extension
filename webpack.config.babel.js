@@ -1,6 +1,7 @@
 import path from 'path'
 
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+import ZipPlugin from 'zip-webpack-plugin'
 
 module.exports = {
   entry: ['babel-polyfill', './src/index.js'],
@@ -23,6 +24,9 @@ module.exports = {
       {from: './chrome/manifest.json', to: '.' },
       {from: './public/inject.js', to: '.' },
       {from: './public/icons', to: './icons' },
-    ], {copyUnmodified: true})
+    ], {copyUnmodified: true}),
+    new ZipPlugin({
+      filename: 'extension.zip'
+    })
   ]
 }
