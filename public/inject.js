@@ -6,8 +6,8 @@
 	let div = document.createElement('div')
 	Object.assign(div.style, {
 		position: 'absolute',
-		left: 0,
-		bottom: 0,
+		left: "0",
+		bottom: "0",
 		width: '100%',
 		height: '100%',
 		backgroundColor: 'white',
@@ -25,14 +25,12 @@
 
 	let toggle = document.createElement('div')
 	Object.assign(toggle.style, {
-		bottom: '0px',
-		left: '70px',
-		position: 'fixed',
-		right: "50%",
 		backgroundColor: 'green',
 		color: 'white',
-		width: '100px',
+		position: 'absolute',
+		bottom: '-35px',
 		height: '50px',
+		width: '100px',
 	})
 	toggle.id = 'bi-toggle'
 	toggle.innerHTML = 'BuildInfo'
@@ -41,8 +39,29 @@
 		let app = document.getElementById('app-root')
 		app.style.visibility = app.style.visibility == 'hidden' ? 'visible' : 'hidden'
 		app.style.overflow = app.style.overflow == 'hidden' ? 'visible' : 'hidden'
-
 	}
 
-	document.body.appendChild(toggle)
+	let toggleWrap = document.createElement('div')
+	Object.assign(toggleWrap.style, {
+		bottom: '0px',
+		left: '100px',
+		position: 'fixed',
+		right: "50%",
+		height: '100px',
+		width: '100px',
+	})
+
+	toggleWrap.appendChild(toggle)
+
+	toggleWrap.onmouseover = function(e) {
+		let toggle = document.getElementById('bi-toggle')
+		toggle.style.bottom = '0px'
+	}
+
+	toggleWrap.onmouseout = function(e) {
+		let toggle = document.getElementById('bi-toggle')
+		toggle.style.bottom = '-35px'
+	}
+
+	document.body.appendChild(toggleWrap)
 })();
