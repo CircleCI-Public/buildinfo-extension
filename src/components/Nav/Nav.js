@@ -68,13 +68,6 @@ class Nav extends PureComponent {
           <div className='navbar-header'>
             <a className='navbar-brand' href='#dashboard'>CircleCI BuildInfo</a>
           </div>
-          <div>
-            <ul className="bi-nav-links">
-              <li ><Link to='/bi'>Dashboard</Link></li>
-              <li ><Link to='/bi/about'>About</Link></li>
-              <li ><Link to='/bi/contact'>Contact</Link></li>
-            </ul>
-          </div>
         </div>
       </nav>
     )

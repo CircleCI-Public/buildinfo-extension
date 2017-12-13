@@ -15,27 +15,3 @@
 
 .starter-template {
 }
-
-.config-inputs {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-around;
-}
-
-.config-inputs input {
-  text-align: center;
-}
-
-.quick-diffs {
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.diff-option {
-  margin-right: .5rem;
-  cursor: pointer;
-}
-
-.diff-option:hover {
-  color: white;
-}
