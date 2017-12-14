@@ -18,7 +18,7 @@ Requires `node` and `yarn` installed.
 
   `yarn run watch`
 
-- [load the unpacked extension in chrome](https://developer.chrome.com/extensions/getstarted#unpacked)
+- [load the unpacked extension in chrome](https://developer.chrome.com/extensions/getstarted#unpacked). The unpacked extension will be located at the root of the project in a folder called `dist`.
 
 - give yourself a pat on the back. Then extension should be running when you visit a CircleCI domain
 
