@@ -28,6 +28,7 @@
 		backgroundColor: 'green',
 		color: 'white',
 		position: 'absolute',
+		pointerEvents: 'all',
 		bottom: '-35px',
 		height: '50px',
 		width: '100px',
@@ -44,9 +45,9 @@
 	let toggleWrap = document.createElement('div')
 	Object.assign(toggleWrap.style, {
 		bottom: '0px',
-		left: '100px',
+		right: '17px',
 		position: 'fixed',
-		right: "50%",
+		pointerEvents: 'none',
 		height: '100px',
 		width: '100px',
 	})
