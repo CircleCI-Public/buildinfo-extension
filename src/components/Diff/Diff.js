@@ -20,13 +20,27 @@ const Diff = ({
   apiTokenValid,
 }) => (
   <div>
-      <h2 className='sub-header'>Diffs</h2>
-      <Sticky top='.bi-navbar' enabled>
+      <Sticky enabled>
         <div className='diff-content'>
-          <select defaultValue='config' onChange={e => setDiffContent(e.target.value)}>
-            <option value='build-json'>Build JSON</option>
-            <option value='config'>Config</option>
-          </select>
+          <div>
+            <select defaultValue='config' onChange={e => setDiffContent(e.target.value)}>
+              <option value='build-json'>build json</option>
+              <option value='config'>config</option>
+            </select>
+          </div>
+          {diffContent
+            ?
+              <div>
+                <select disabled={diffContent === 'config' ? false : true}
+                  defaultValue={diffContent === 'config' ? diffType : 'json'}
+                  onChange={e => setDiffType(e.target.value)}>
+                  <option value='chars'>chars</option>
+                  <option value='words'>words</option>
+                  <option value='sentences'>sentences</option>
+                </select>
+              </div>
+            : null
+          }
         </div>
         <div className='config-inputs'>
           <input
@@ -36,16 +50,7 @@ const Diff = ({
             type='number'
             min='0'
             value={diffInputA} />
-          {diffContent
-            ? <select disabled={diffContent === 'config' ? false : true}
-                defaultValue={diffContent === 'config' ? diffType : 'json'}
-                onChange={e => setDiffType(e.target.value)}>
-                <option value='chars'>chars</option>
-                <option value='words'>words</option>
-                <option value='sentences'>sentences</option>
-              </select>
-            : null
-          }
+
           <input
             onChange={e => setDiffInputB(e.target.value)}
             onBlur={fetchDiffConfigB}

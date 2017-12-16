@@ -1,9 +1,15 @@
-.bi-nav-links {
+.bi-navbar {
   display: flex;
+  padding: 10px 10px;
+  margin-bottom: 7px;
   flex-flow: row wrap;
-  justify-content: space-around;
+  background-color: green;
+  color: white;
+  justify-content: flex-start;
   align-items: center;
-  height: 70px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 40px;
 }
 
 #bi-toggle {

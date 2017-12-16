@@ -29,7 +29,7 @@
 		color: 'white',
 		position: 'absolute',
 		pointerEvents: 'all',
-		bottom: '-35px',
+		bottom: '-30px',
 		height: '50px',
 		width: '100px',
 	})
@@ -61,7 +61,7 @@
 
 	toggleWrap.onmouseout = function(e) {
 		let toggle = document.getElementById('bi-toggle')
-		toggle.style.bottom = '-35px'
+		toggle.style.bottom = '-30px'
 	}
 
 	document.body.appendChild(toggleWrap)

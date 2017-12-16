@@ -63,12 +63,8 @@ class Nav extends PureComponent {
   render() {
 
     return (
-      <nav className='bi-navbar navbar-inverse navbar-fixed-top'>
-        <div className='container'>
-          <div className='navbar-header'>
-            <a className='navbar-brand' href='#dashboard'>CircleCI BuildInfo</a>
-          </div>
-        </div>
+      <nav className='bi-navbar'>
+        BuildInfo
       </nav>
     )
   }
