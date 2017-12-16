@@ -25,6 +25,7 @@ export default (env={}) => {
       new CopyWebpackPlugin([
         {from: './chrome/manifest.json', to: '.' },
         {from: './public/inject.js', to: '.' },
+        {from: './public/popup.html', to: '.' },
         {from: './public/icons', to: './icons' },
       ], {copyUnmodified: true}),
       (env.zip && new ZipPlugin({
