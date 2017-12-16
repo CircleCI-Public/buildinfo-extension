@@ -1,7 +1,9 @@
 import path from 'path'
 
+import webpack from 'webpack'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ZipPlugin from 'zip-webpack-plugin'
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
 
 export default (env={}) => {
 
@@ -22,12 +24,16 @@ export default (env={}) => {
       ]
     },
     plugins: [
+      new webpack.optimize.ModuleConcatenationPlugin(),
       new CopyWebpackPlugin([
         {from: './chrome/manifest.json', to: '.' },
         {from: './public/inject.js', to: '.' },
         {from: './public/popup.html', to: '.' },
         {from: './public/icons', to: './icons' },
       ], {copyUnmodified: true}),
+      (env.prod && new UglifyJSPlugin({
+        //sourceMap: true
+      })),
       (env.zip && new ZipPlugin({
         filename: 'extension.zip'
       }))
