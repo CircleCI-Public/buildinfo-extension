@@ -25,6 +25,7 @@ const Diff = ({
           <input
             onChange={e => setDiffInputA(e.target.value)}
             onBlur={fetchDiffConfigA}
+            placeholder={0}
             className='config-input-a'
             type='number'
             min='0'
@@ -32,6 +33,7 @@ const Diff = ({
           <input
             onChange={e => setDiffInputB(e.target.value)}
             onBlur={fetchDiffConfigB}
+            placeholder={0}
             className='config-input-b'
             type='number'
             min='0'
