@@ -21,6 +21,22 @@ const Diff = ({
 }) => (
   <div>
       <Sticky enabled>
+        <div className='config-inputs'>
+          <input
+            onChange={e => setDiffInputA(e.target.value)}
+            onBlur={fetchDiffConfigA}
+            className='config-input-a'
+            type='number'
+            min='0'
+            value={diffInputA} />
+          <input
+            onChange={e => setDiffInputB(e.target.value)}
+            onBlur={fetchDiffConfigB}
+            className='config-input-b'
+            type='number'
+            min='0'
+            value={diffInputB} />
+        </div>
         <div className='diff-content'>
           <div>
             <select defaultValue='config' onChange={e => setDiffContent(e.target.value)}>
@@ -41,23 +57,6 @@ const Diff = ({
               </div>
             : null
           }
-        </div>
-        <div className='config-inputs'>
-          <input
-            onChange={e => setDiffInputA(e.target.value)}
-            onBlur={fetchDiffConfigA}
-            className='config-input-a'
-            type='number'
-            min='0'
-            value={diffInputA} />
-
-          <input
-            onChange={e => setDiffInputB(e.target.value)}
-            onBlur={fetchDiffConfigB}
-            className='config-input-b'
-            type='number'
-            min='0'
-            value={diffInputB} />
         </div>
         <RecentBuildDiffs />
       </Sticky>
