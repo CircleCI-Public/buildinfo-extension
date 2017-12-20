@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDiff from 'react-diff'
+import ReactDiff from '@fernfernfern/react-diff'
 import RecentBuildDiffs from './components/RecentBuildDiffs'
 import Sticky from 'react-stickynode'
 import './assets/styles/Diff.css'
