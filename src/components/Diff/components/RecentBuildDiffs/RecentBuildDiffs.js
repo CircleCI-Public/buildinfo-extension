@@ -1,5 +1,5 @@
 import React from 'react'
-import './assets/styles/RecentBuildDiffs.css'
+import './assets/styles/RecentBuildDiffs.styl'
 
 const RecentBuildDiffs = ({
   recentBuilds,

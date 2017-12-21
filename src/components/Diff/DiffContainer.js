@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { setDiffConfigA, setDiffConfigB,
   setDiffInputA, setDiffInputB, fetchDiffConfigA, fetchDiffConfigB,
   setDiffContent } from '../common/actions/appActions'
-import { setDiffType } from './actions/diffActions'
+import { setDiffType, setDiffView } from './actions/diffActions'
 import Diff from './Diff'
 
 const mapStateToProps = state => ({
@@ -12,6 +12,7 @@ const mapStateToProps = state => ({
   diffBuildA: state.app.get('diffConfigA'),
   diffBuildB: state.app.get('diffConfigB'),
   diffType: state.diff.get('diffType'),
+  diffView: state.diff.get('diffView'),
   apiTokenValid: state.app.get('apiTokenValid'),
   diffContent: state.app.get('diffContent'),
 })
@@ -24,6 +25,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchDiffConfigA,
   fetchDiffConfigB,
   setDiffType,
+  setDiffView,
   setDiffContent,
 }, dispatch)
 
