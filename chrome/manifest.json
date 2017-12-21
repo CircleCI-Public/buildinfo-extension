@@ -1,7 +1,7 @@
 {
   "name": "BuildInfo",
   "description": "BuildInfo",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "content_scripts": [
     {
       "matches": [
