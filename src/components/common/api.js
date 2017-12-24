@@ -10,10 +10,14 @@ function fetchAPI(apiCall) {
   return json
 }
 
-export function fetchBuild(vcsType, orgName, repoName, buildNum, apiToken) {
+export function fetchBuild(vcsType, orgName, repoName, buildNum) {
   return fetchAPI(`${BASE_API_URL}/project/${vcsType}/${orgName}/${repoName}/${buildNum}`)
 }
 
-export function fetchRecentBuilds(vcsType, orgName, repoName, apiToken) {
+export function fetchRecentBuilds(vcsType, orgName, repoName) {
   return fetchAPI(`${BASE_API_URL}/project/${vcsType}/${orgName}/${repoName}`)
+}
+
+export function fetchConfigTranslation(vcsType, orgName, repoName) {
+  return fetch(`${BASE_API_URL}/project/${vcsType}/${orgName}/${repoName}/config-translation`, {credentials: 'include'}).then(response => response.text()) 
 }

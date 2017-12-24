@@ -16,6 +16,7 @@ const initialState = fromJS({
   diffInputB: '',
   diffConfigA: {circle_yml: {string:''}},
   diffConfigB: {circle_yml: {string:''}},
+  configTranslation: ''
 })
 
 const appReducer = (state = initialState, action) => {
@@ -48,6 +49,8 @@ const appReducer = (state = initialState, action) => {
       return state.set('diffConfigB', fromJS(action.payload))
     case types.SET_DIFF_CONTENT:
       return state.set('diffContent', action.payload)
+    case types.SET_CONFIG_TRANSLATION:
+      return state.set('configTranslation', action.payload)
     default:
       return state
   }

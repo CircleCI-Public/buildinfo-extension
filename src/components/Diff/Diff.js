@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDiff from '@fernfernfern/react-diff'
 import RecentBuildDiffs from './components/RecentBuildDiffs'
 import MetaView from './components/MetaView'
+import TranslateView from './components/TranslateView'
 import Sticky from 'react-stickynode'
 import './assets/styles/Diff.styl'
 
@@ -24,11 +25,10 @@ const Diff = ({
 }) => (
 <div>
     <Sticky enabled>
-      <div>
-        <select value={diffView} onChange={e => setDiffView(e.target.value)}>
-          <option value='diff'>diff</option>
-          <option value='meta'>meta</option>
-        </select>
+      <div className='view-actions'>
+        <button onClick={ () => setDiffView('diff') }>Diff</button>
+        <button onClick={ () => setDiffView('meta') }>Meta</button>
+        <button onClick={ () => setDiffView('translate') }>Translate Config</button>
       </div>
       <div className='config-inputs'>
         <input
@@ -83,6 +83,9 @@ const Diff = ({
     }
     {diffView === 'meta' &&
       <MetaView />
+    }
+    {diffView === 'translate' &&
+      <TranslateView />
     }
   </div>
 </div>

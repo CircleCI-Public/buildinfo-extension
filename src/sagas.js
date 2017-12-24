@@ -5,5 +5,6 @@ export default function* rootSaga () {
     yield [
         fork(appSagas.fetchConfigSaga),
         fork(appSagas.diffSaga),
+        fork(appSagas.configTranslationSaga),
     ]
 }

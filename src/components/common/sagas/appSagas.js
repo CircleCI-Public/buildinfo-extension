@@ -37,6 +37,16 @@ function* fetchRecentBuilds(action) {
   } catch(e) {console.log(e)}
 }
 
+function* fetchConfigTranslation(action) {
+  const vcsType = yield select(state => state.app.get('vcsType'))
+  const orgName = yield select(state => state.app.get('orgName'))
+  const repoName = yield select(state => state.app.get('repoName'))
+  const translation = yield call(api.fetchConfigTranslation, vcsType, orgName, repoName)
+  try {
+    yield put(appActions.setConfigTranslation(translation))
+  } catch(e) {console.log(e)}
+}
+
 function* setQuickDiff(action) {
 
   yield put(appActions.setDiffInputA(action.payload.buildNumA))
@@ -48,6 +58,11 @@ function* setQuickDiff(action) {
 
 export function* diffSaga(action) {
   yield takeLatest(types.SET_QUICK_DIFF, setQuickDiff)
+}
+
+
+export function* configTranslationSaga(action) {
+  yield takeLatest(types.FETCH_CONFIG_TRANSLATION, fetchConfigTranslation)
 }
 
 // watchers

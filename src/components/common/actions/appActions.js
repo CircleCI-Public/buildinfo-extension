@@ -104,3 +104,11 @@ export const setDiffContent = ( content: String ) => ({
   type: types.SET_DIFF_CONTENT,
   payload: content,
 })
+export const setConfigTranslation = ( content: String ) => ({
+  type: types.SET_CONFIG_TRANSLATION,
+  payload: content,
+})
+
+export const fetchConfigTranslation = () => ({
+  type: types.FETCH_CONFIG_TRANSLATION
+})
