@@ -29,24 +29,24 @@ const Diff = ({
         <button onClick={ () => setDiffView('diff') }>Diff</button>
         <button onClick={ () => setDiffView('meta') }>Meta</button>
         <button onClick={ () => setDiffView('translate') }>Translate Config</button>
-      </div>
-      <div className='config-inputs'>
-        <input
-          onChange={e => setDiffInputA(e.target.value)}
-          onBlur={fetchDiffConfigA}
-          placeholder={0}
-          className='config-input-a'
-          type='number'
-          min='0'
-          value={diffInputA} />
-        <input
-          onChange={e => setDiffInputB(e.target.value)}
-          onBlur={fetchDiffConfigB}
-          placeholder={0}
-          className='config-input-b'
-          type='number'
-          min='0'
-          value={diffInputB} />
+        <div className='config-inputs'>
+          <input
+            onChange={e => setDiffInputA(e.target.value)}
+            onBlur={fetchDiffConfigA}
+            placeholder={0}
+            className='config-input-a'
+            type='number'
+            min='0'
+            value={diffInputA} />
+            <input
+              onChange={e => setDiffInputB(e.target.value)}
+              onBlur={fetchDiffConfigB}
+              placeholder={0}
+              className='config-input-b'
+              type='number'
+              min='0'
+              value={diffInputB} />
+            </div>
       </div>
       {diffView === 'diff' &&
       <div>
