@@ -1,6 +1,6 @@
 {
   "name": "buildinfo-extension",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "scripts": {
     "webpack": "webpack",
     "watch": "webpack --watch",
