@@ -22,6 +22,9 @@ const Diff = ({
   diffContent,
   setDiffContent,
   apiTokenValid,
+  quickDiffBranchList,
+  quickDiffBranch,
+  setQuickDiffBranch,
 }) => (
 <div>
     <Sticky enabled>
@@ -70,6 +73,12 @@ const Diff = ({
               </div>
             : null
           }
+          <div>
+            <select value={quickDiffBranch} onChange={e => setQuickDiffBranch(e.target.value)}>
+              {quickDiffBranchList.map(branch => <option key={branch} value={branch}>{branch}</option>)}
+              <option value='all branches'>all branches</option>
+            </select>
+          </div>
         </div>
       </div>
       }

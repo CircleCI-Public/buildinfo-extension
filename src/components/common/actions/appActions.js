@@ -104,9 +104,14 @@ export const setDiffContent = ( content: String ) => ({
   type: types.SET_DIFF_CONTENT,
   payload: content,
 })
+
 export const setConfigTranslation = ( content: String ) => ({
   type: types.SET_CONFIG_TRANSLATION,
   payload: content,
+})
+export const setQuickDiffBranch = ( branch: String ) => ({
+  type: types.SET_QUICK_DIFF_BRANCH,
+  payload: branch,
 })
 
 export const fetchConfigTranslation = () => ({

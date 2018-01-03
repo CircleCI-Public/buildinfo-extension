@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable'
 import * as types from '../const'
+import { uniq } from 'lodash'
 
 const initialState = fromJS({
   apiTokenValid: false,
@@ -12,6 +13,8 @@ const initialState = fromJS({
   buildNumber: '',
   recentBuilds: fromJS([]),
   vcsType: '',
+  quickDiffBranch: 'all branches',
+  quickDiffBranchList: fromJS([]),
   diffInputA: '',
   diffInputB: '',
   diffConfigA: {circle_yml: {string:''}},
@@ -32,7 +35,8 @@ const appReducer = (state = initialState, action) => {
     case types.SET_REPO_NAME:
       return state.set('repoName', action.payload)
     case types.SET_RECENT_BUILDS:
-      return state.set('recentBuilds', action.payload)
+      let newState = state.set('quickDiffBranchList', uniq(action.payload.map(build => build.branch)))
+      return newState.set('recentBuilds', action.payload)
     case types.SET_BUILD_NUMBER:
       return state.set('buildNumber', action.payload)
     case types.SET_TOKEN:
@@ -51,6 +55,8 @@ const appReducer = (state = initialState, action) => {
       return state.set('diffContent', action.payload)
     case types.SET_CONFIG_TRANSLATION:
       return state.set('configTranslation', action.payload)
+    case types.SET_QUICK_DIFF_BRANCH:
+      return state.set('quickDiffBranch', action.payload)
     default:
       return state
   }

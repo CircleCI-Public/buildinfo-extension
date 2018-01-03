@@ -5,6 +5,7 @@ import RecentBuildDiffs from './RecentBuildDiffs'
 
 const mapStateToProps = state => ({
   recentBuilds: state.app.get('recentBuilds'),
+  quickDiffBranch: state.app.get('quickDiffBranch'),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
