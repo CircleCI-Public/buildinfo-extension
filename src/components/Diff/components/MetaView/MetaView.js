@@ -1,228 +1,255 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import moment from 'moment'
+import SimpleMetaRow from './components/SimpleMetaRow'
+import MetaRow from './components/MetaRow'
+import Steps from './components/steps/Steps'
+import StepCount from './components/steps/StepCount'
+import TimestampMetaRow from './components/TimestampMetaRow'
 import './assets/styles/MetaView.styl'
 
-const MetaView = ({
-  diffBuildA,
-  diffBuildB,
-}) => (
-  <div className='diff-meta-view'>
-    {console.log(diffBuildA.toJS())}
-    {console.log(diffBuildB.toJS())}
+class MetaView extends PureComponent {
+  
+  constructor() {
+    super()
 
+    this.state = {
+      filterActive: false,
+      filterInput: '',
+      filterItems: [], 
+    }
+  }
+  
+
+  filterInput = (e) => {
+    this.setState({
+      filterActive: e.target.value.length > 0,
+      filterInput: e.target.value,
+      filterItems: e.target.value.split(',').filter(item => item.trim() != '')
+    })
+  }
+
+  filterCheck = (keys : Array) => {
+    if (this.state.filterActive) {
+      //console.log(this.state.filterItems)
+      return !keys.some(key => {
+        //console.log(key)
+        return this.state.filterItems.some(item => {
+          //console.log(`${key} includes ${item}: ${key.includes(item.toLowerCase().trim())}`)
+          return key.includes(item.toLowerCase().trim())
+        })
+      })
+    } else {
+      return false
+    }
+  }
+
+  render() {
+
+    let { 
+      diffBuildA,
+      diffBuildB,
+      } = this.props
+
+    let {
+      filterCheck 
+    } = this
+
+    let rows = [
+      //identities
+      {property: ['username'], label: 'username', section: 'identities'},
+      {property: ['committer_name'], label: 'committer name', section: 'identities'},
+      {property: ['committer_email'], label: 'committer email', section: 'identities'},
+      {property: ['authro_email'], label: 'author email', section: 'identities'},
+      {property: ['owners'], label: 'owners', section: 'identities', json: true},
+      {property: ['vcs_type'], label: 'vcs type', section: 'identities'},
+      //jobs
+      {property: ['platform'], label: 'platform', section: 'jobs'},
+      {property: ['fail_reason'], label: 'fail reason', section: 'jobs'},
+      {property: ['retries'], label: 'retries', section: 'jobs'},
+      {property: ['canceler'], label: 'canceler', section: 'jobs', json: true},
+      {property: ['parallel'], label: 'parallel', section: 'jobs'},
+      {property: ['build_time'], label: 'build time', section: 'jobs'},
+      {property: ['timed out'], label: 'timed out', section: 'jobs'},
+      {property: ['why'], label: 'why', section: 'jobs'},
+      {property: ['lifecycle'], label: 'lifecycle', section: 'jobs'},
+      {property: ['build parameters'], label: 'build parameters', section: 'jobs', json: true},
+      //Build Agent
+      {property: ['picard', 'build_agent', 'image'], label: 'image', section: 'build_agent'},
+      {property: ['picard', 'build_agent', 'properties', 'build_agent'], label: 'build agent', section: 'build_agent'},
+      {property: ['picard', 'build_agent', 'properties', 'executor'], label: 'executor', section: 'build_agent'},
+      //Resource Class
+      {property: ['picard', 'resource_class', 'cpu'], label: 'cpu', section: 'resource_class'},
+      {property: ['picard', 'resource_class', 'ram'], label: 'ram', section: 'resource_class'},
+      {property: ['picard', 'resource_class', 'class'], label: 'class', section: 'resource_class'},
+      //Steps
+      {property: ['steps'], label: 'count', section: 'steps'},
+      {property: ['steps'], label: 'names', section: 'steps'},
+      //Timestamps
+      {property: ['usage_queued_at'], label: 'usage queued at', section: 'timestamps'},
+      {property: ['start_time'], label: 'start time', section: 'timestamps'},
+      {property: ['stop_time'], label: 'stop time', section: 'timestamps'},
+      //Git
+      {property: ['branch'], label: 'branch', section: 'git'},
+      {property: ['subject'], label: 'commit message', section: 'git'},
+      {property: ['vcs_tag'], label: 'vcs_tag', section: 'git'},
+      {property: ['compare'], label: 'compare', section: 'git', json: true},
+      //Node
+      {property: ['node', 0, 'public_ip_addr'], label: 'public ip', section: 'node'},
+      {property: ['node', 0, 'port'], label: 'port', section: 'node'},
+      {property: ['node', 0, 'username'], label: 'username', section: 'node'},
+      {property: ['node', 0, 'image_id'], label: 'image id', section: 'node'},
+      {property: ['node', 0, 'ssh_enabled'], label: 'ssh enabled', section: 'node'},
+      //Wat?
+      {property: ['dont_build'], label: 'don\'t build', section: 'wat'},
+      {property: ['body'], label: 'body', section: 'wat'},
+
+    ].filter(row => !filterCheck([row.label]))
+
+    let identityRows = rows.filter(row => row.section === 'identities')
+    let jobRows = rows.filter(row => row.section === 'jobs')
+    let buildAgentRows = rows.filter(row => row.section == 'build_agent')
+    let resourceClassRows = rows.filter(row => row.section == 'resource_class')
+    let stepsRows = rows.filter(row => row.section === 'steps')
+    let timestampRows = rows.filter(row => row.section === 'timestamps')
+    let gitRows = rows.filter(row => row.section === 'git')
+    let nodeRows = rows.filter(row => row.section === 'node')
+    let watRows = rows.filter(row => row.section === 'wat')
+
+    return (
+    <div className='diff-meta-view'>
+    <input className='filter-input' placeholder='username, branch, start time ' onChange={this.filterInput} />
     {diffBuildA.get('username') && diffBuildB.get('username') ?
-      <div>
-        <h3>Itentities</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>Username</div>
-          <div className='left'>{ diffBuildA.get('username') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('username') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Committer Name</div>
-          <div className='left'>{ diffBuildA.get('committer_name') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('committer_name') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Committer Email</div>
-          <div className='left'>{ diffBuildA.get('committer_email') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('committer_email') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Author Email</div>
-          <div className='left'>{ diffBuildA.get('author_email') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('author_email') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Owners</div>
-          <div className='left'>{ diffBuildA.get('owners').map(name => `${name}, `) || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('owners').map(name => `${name}, `) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>VCS Type</div>
-          <div className='left'>{ diffBuildA.get('vcs_type') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('vcs_type') || 'null' }</div>
-        </div>
-
-        <h3>Job</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>Platform</div>
-          <div className='left'>{ diffBuildA.get('platform') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('platform') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Fail Reason</div>
-          <div className='left'>{ diffBuildA.get('fail_reason') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('fail_reason') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Retries</div>
-          <div className='left'>{ diffBuildA.get('retries') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('retries') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Canceler</div>
-          <div className='left'>{ diffBuildA.getIn(['canceler', 'login']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['canceler', 'login']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Parallel</div>
-          <div className='left'>{ diffBuildA.get('parallel') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('parallel') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Build Time</div>
-          <div className='left'>{ moment.duration(diffBuildA.get('build_time_millis')).humanize() || 'null' }</div>
-          <div className='right'>{ moment.duration(diffBuildB.get('build_time_millis')).humanize() || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Timed Out</div>
-          <div className='left'>{ diffBuildA.get('timedout') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('timedout') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Why</div>
-          <div className='left'>{ diffBuildA.get('why') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('why') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Lifecycle</div>
-          <div className='left'>{ diffBuildA.get('lifecycle') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('lifecycle') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Build Parameneters</div>
-          <div className='left'>{ JSON.stringify(diffBuildA.get('build_parameters')) || 'null' }</div>
-          <div className='right'>{ JSON.stringify(diffBuildB.get('build_parameters')) || 'null' }</div>
-        </div>
-
-        <h3>Build Agent</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>Image</div>
-          <div className='left'>{ diffBuildA.getIn(['picard', 'build_agent', 'image']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['picard', 'build_agent', 'image']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Build Agent</div>
-          <div className='left'>{ diffBuildA.getIn(['picard', 'build_agent', 'properties', 'build_agent']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['picard', 'build_agent', 'properties', 'build_agent']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Executor</div>
-          <div className='left'>{ diffBuildA.getIn(['picard', 'build_agent', 'properties', 'executor']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['picard', 'build_agent', 'properties', 'executor']) || 'null' }</div>
-        </div>
-
-        <h3>Resource Class</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>CPU</div>
-          <div className='left'>{ diffBuildA.getIn(['picard', 'resource_class', 'cpu']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['picard', 'resource_class', 'cpu']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>RAM</div>
-          <div className='left'>{ diffBuildA.getIn(['picard', 'resource_class', 'ram']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['picard', 'resource_class', 'ram']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Class</div>
-          <div className='left'>{ diffBuildA.getIn(['picard', 'resource_class', 'class']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['picard', 'resource_class', 'class']) || 'null' }</div>
-        </div>
-
-        <h3>Steps</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>Count</div>
-          <div className='left'>{ diffBuildA.getIn(['steps']).count() || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['steps']).count() || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Names</div>
-          <div className='left'>{ diffBuildA.getIn(['steps']).map(step => <div>{step.get('name')}</div>) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['steps']).map(step => <div>{step.get('name')}</div>) || 'null' }</div>
-        </div>
-
-        <h3>Timestamps</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>Usage Queued At</div>
-          <div className='left'>{ moment(diffBuildA.get('usage_queued_at')).format("MMM Do YYYY, h:mm:ss a") || 'null' }</div>
-          <div className='right'>{ moment(diffBuildB.get('usage_queued_at')).format("MMM Do YYYY, h:mm:ss a") || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Start Time</div>
-          <div className='left'>{ moment(diffBuildA.get('start_time')).format("MMM Do YYYY, h:mm:ss a") || 'null' }</div>
-          <div className='right'>{ moment(diffBuildB.get('start_time')).format("MMM Do YYYY, h:mm:ss a") || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Stop Time</div>
-          <div className='left'>{ moment(diffBuildA.get('stop_time')).format("MMM Do YYYY, h:mm:ss a") || 'null' }</div>
-          <div className='right'>{ moment(diffBuildB.get('stop_time')).format("MMM Do YYYY, h:mm:ss a") || 'null' }</div>
-        </div>
-
-        <h3>Git</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>Branch</div>
-          <div className='left'>{ diffBuildA.get('branch') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('branch') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Commit Message</div>
-          <div className='left'>{ diffBuildA.get('subject') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('subject') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>VCS Tag</div>
-          <div className='left'>{ diffBuildA.get('vcs_tag') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('vcs_tag') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Compare</div>
-          <div className='left'><a href={diffBuildA.compare} target='_blank'> click </a></div>
-          <div className='right'><a href={diffBuildB.compare} target='_blank'> click </a></div>
-        </div>
-
-        <h3>Node</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>Public IP</div>
-          <div className='left'>{ diffBuildA.getIn(['node', 0, 'public_ip_addr']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['node', 0, 'public_ip_addr']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Port</div>
-          <div className='left'>{ diffBuildA.getIn(['node', 0, 'port']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['node', 0, 'port']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Username</div>
-          <div className='left'>{ diffBuildA.getIn(['node', 0, 'username']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['node', 0, 'username']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Image ID</div>
-          <div className='left'>{ diffBuildA.getIn(['node', 0, 'image_id']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['node', 0, 'image_id']) || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>SSH Enabled</div>
-          <div className='left'>{ diffBuildA.getIn(['node', 0, 'ssh_enabled']) || 'null' }</div>
-          <div className='right'>{ diffBuildB.getIn(['node', 0, 'ssh_enabled']) || 'null' }</div>
-        </div>
-
-        <h3>Wat?</h3>
-        <div className='job-meta'>
-          <div className='bi-label'>Don't Build</div>
-          <div className='left'>{ diffBuildA.get('dont_build') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('dont_build') || 'null' }</div>
-        </div>
-        <div className='job-meta'>
-          <div className='bi-label'>Body</div>
-          <div className='left'>{ diffBuildA.get('body') || 'null' }</div>
-          <div className='right'>{ diffBuildB.get('body') || 'null' }</div>
-        </div>
-      </div>
+      <React.Fragment>
+        {/* Identity Rows*/}
+        {identityRows.length > 0 &&
+          <React.Fragment>
+            <h3>Identities</h3>
+            { identityRows.map(row => (
+              <MetaRow key={`${row.label}`}
+                A={diffBuildA} B={diffBuildB} 
+                label={row.label} json={row.json ? true : false} property={row.property}>
+                <SimpleMetaRow />
+              </MetaRow>
+            ))}
+          </React.Fragment>
+        }
+        {/* Job Rows*/}
+        {jobRows.length > 0 &&
+          <React.Fragment>
+            <h3>Jobs</h3>
+            { jobRows.map(row => (
+              <MetaRow key={`${row.label}`}
+                A={diffBuildA} B={diffBuildB} 
+                label={row.label} json={row.json ? true : false} property={row.property}>
+                <SimpleMetaRow />
+              </MetaRow>
+            ))}
+          </React.Fragment>
+        }
+        {/* Build Agent Rows*/}
+        {buildAgentRows.length > 0 &&
+          <React.Fragment>
+            <h3>Build Agent</h3>
+            { buildAgentRows.map(row => (
+              <MetaRow key={`${row.label}`}
+                A={diffBuildA} B={diffBuildB} 
+                label={row.label} json={row.json ? true : false} property={row.property}>
+                <SimpleMetaRow />
+              </MetaRow>
+            ))}
+          </React.Fragment>
+        }
+        {/* Resource Class Rows*/}
+        {resourceClassRows.length > 0 &&
+          <React.Fragment>
+            <h3>Resource Class</h3>
+            { resourceClassRows.map(row => (
+              <MetaRow key={`${row.label}`}
+                A={diffBuildA} B={diffBuildB} 
+                label={row.label} json={row.json ? true : false} property={row.property}>
+                <SimpleMetaRow />
+              </MetaRow>
+            ))}
+          </React.Fragment>
+        }
+        {stepsRows.length > 0 &&
+          <React.Fragment>
+            <h3>Steps</h3>
+            { stepsRows.map(row => {
+              switch(row.label) {
+                case "names":
+                  return (
+                    <MetaRow key={`${row.label}`} A={diffBuildA} B={diffBuildB} 
+                      label={row.label} json={row.json ? true : false} property={row.property}>
+                      <Steps/>
+                    </MetaRow>
+                  )
+                case "count":
+                  return (
+                      <MetaRow key={`${row.label}`} A={diffBuildA} B={diffBuildB} 
+                        label={row.label} json={row.json ? true : false} property={row.property}>
+                        <StepCount/>
+                      </MetaRow>
+                    )
+              }
+            })}
+          </React.Fragment>
+        }
+        {timestampRows.length > 0 &&
+          <React.Fragment>
+            <h3>Timestamps</h3>
+            { timestampRows.map(row => (
+              <MetaRow key={`${row.label}`}
+                A={diffBuildA} B={diffBuildB} 
+                label={row.label} json={row.json ? true : false} property={row.property}>
+                <TimestampMetaRow />
+              </MetaRow>
+            ))}
+          </React.Fragment>
+        }
+        {/* Resource Class Rows*/}
+        {gitRows.length > 0 &&
+          <React.Fragment>
+            <h3>Resource Class</h3>
+            { gitRows.map(row => (
+              <MetaRow key={`${row.label}`}
+                A={diffBuildA} B={diffBuildB} 
+                label={row.label} json={row.json ? true : false} property={row.property}>
+                <SimpleMetaRow />
+              </MetaRow>
+            ))}
+          </React.Fragment>
+        }
+        {nodeRows.length > 0 &&
+          <React.Fragment>
+            <h3>Node</h3>
+            { nodeRows.map(row => (
+              <MetaRow key={`${row.label}`}
+                A={diffBuildA} B={diffBuildB} 
+                label={row.label} json={row.json ? true : false} property={row.property}>
+                <SimpleMetaRow />
+              </MetaRow>
+            ))}
+          </React.Fragment>
+        }
+        {watRows.length > 0 &&
+          <React.Fragment>
+            <h3>Wat?</h3>
+            { watRows.map(row => (
+              <MetaRow key={`${row.label}`}
+                A={diffBuildA} B={diffBuildB} 
+                label={row.label} json={row.json ? true : false} property={row.property}>
+                <SimpleMetaRow />
+              </MetaRow>
+            ))}
+          </React.Fragment>
+        }
+      </React.Fragment>
       : 'Select  builds to view'
   }
   </div>
-)
+   )
+  }
+}
 
 export default MetaView
