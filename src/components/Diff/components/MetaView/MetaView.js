@@ -5,7 +5,7 @@ import MetaRow from './components/MetaRow'
 import Steps from './components/steps/Steps'
 import StepCount from './components/steps/StepCount'
 import TimestampMetaRow from './components/TimestampMetaRow'
-import './assets/styles/MetaView.styl'
+import styles from './assets/styles/MetaView.styl'
 
 class MetaView extends PureComponent {
   
@@ -116,8 +116,8 @@ class MetaView extends PureComponent {
     let watRows = rows.filter(row => row.section === 'wat')
 
     return (
-    <div className='diff-meta-view'>
-    <input className='filter-input' placeholder='username, branch, start time ' onChange={this.filterInput} />
+    <div className={styles['diff-meta-view']}>
+    <input className={styles['filter-input']} placeholder='username, branch, start time ' onChange={this.filterInput} />
     {diffBuildA.get('username') && diffBuildB.get('username') ?
       <React.Fragment>
         {/* Identity Rows*/}

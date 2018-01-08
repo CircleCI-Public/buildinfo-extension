@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import styles from '../assets/styles/MetaView.styl'
 import { isEqual } from 'lodash'
 
 const customCompare =(label, property,  A, B) => {
@@ -16,8 +17,10 @@ const customCompare =(label, property,  A, B) => {
 }
 
 const MetaRow = (props) => (
-    <div className={ classnames('job-meta', {'hidden': props.hidden, 
-        'reddy': customCompare(props.label, props.property, props.A, props.B) })}>
+    <div className={ classnames(styles['job-meta'], 
+        { [styles['hidden']]: props.hidden, 
+        [styles['reddy'] ]: customCompare(props.label, props.property, props.A, props.B)
+        })}>
         {React.Children.map(props.children, child => {
             const { children, ...newProps } = props
             newProps['key'] = `${newProps.A.get('start_time')}${newProps.B.get('build_number')}`

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import './assets/styles/TranslateView.styl'
+import styles from './assets/styles/TranslateView.styl'
 
 class TranslateView extends PureComponent {
 
@@ -16,11 +16,11 @@ class TranslateView extends PureComponent {
     let { configTranslation } = this.props
 
     return (
-      <div className='translate-view'>
+      <div className={styles['translate-view']}>
         <textarea
           value={ configTranslation }
           placeholder='loading...'
-          className='translate-content'
+          className={styles['translate-content']}
           rows='500'
           readOnly
         />

@@ -1,12 +1,12 @@
 import React from 'react'
-import './assets/styles/RecentBuildDiffs.styl'
+import styles from './assets/styles/RecentBuildDiffs.styl'
 
 const RecentBuildDiffs = ({
   recentBuilds,
   setQuickDiff,
   quickDiffBranch,
 }) => (
-  <div className='recent-build-diffs'>
+  <div className={styles['recent-build-diffs']}>
     {recentBuilds
      .reverse()
      .filter((build, idx, arr) => {
@@ -30,7 +30,7 @@ const RecentBuildDiffs = ({
      })
      .map((build, idx, arr) => {
        return idx !== (arr.length - 1)
-        ? <div className='quick-diff-option' key={build.build_num}
+        ? <div className={styles['quick-diff-option']} key={build.build_num}
             onClick={e => setQuickDiff(build.build_num, arr[(idx+1)].build_num)}>
               ({build.build_num}-{arr[(idx+1)].build_num})
           </div>

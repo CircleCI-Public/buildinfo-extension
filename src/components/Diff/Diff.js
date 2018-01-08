@@ -4,7 +4,7 @@ import RecentBuildDiffs from './components/RecentBuildDiffs'
 import MetaView from './components/MetaView'
 import TranslateView from './components/TranslateView'
 import Sticky from 'react-stickynode'
-import './assets/styles/Diff.styl'
+import styles from './assets/styles/Diff.styl'
 
 const Diff = ({
   diffInputA,
@@ -28,16 +28,16 @@ const Diff = ({
 }) => (
 <div>
     <Sticky enabled>
-      <div className='view-actions'>
+      <div className={styles['view-actions']}>
         <button onClick={ () => setDiffView('diff') }>Diff</button>
         <button onClick={ () => setDiffView('meta') }>Meta</button>
         <button onClick={ () => setDiffView('translate') }>Translate Config</button>
-        <div className='config-inputs'>
+        <div className={styles['config-inputs']}>
           <input
             onChange={e => setDiffInputA(e.target.value)}
             onBlur={fetchDiffConfigA}
             placeholder={0}
-            className='config-input-a'
+            className={styles['config-input-a']}
             type='number'
             min='0'
             value={diffInputA} />
@@ -45,7 +45,7 @@ const Diff = ({
               onChange={e => setDiffInputB(e.target.value)}
               onBlur={fetchDiffConfigB}
               placeholder={0}
-              className='config-input-b'
+              className={styles['config-input-b']}
               type='number'
               min='0'
               value={diffInputB} />
@@ -53,7 +53,7 @@ const Diff = ({
       </div>
       {diffView === 'diff' &&
       <div>
-        <div className='diff-content'>
+        <div className={styles['diff-content']}>
           <div>
             <select value={diffContent} onChange={e => setDiffContent(e.target.value)}>
               <option value='build-json'>build json</option>
@@ -84,7 +84,7 @@ const Diff = ({
       }
     <RecentBuildDiffs />
   </Sticky>
-  <div className='diffs'>
+  <div className={styles['diffs']}>
     {diffView === 'diff' &&
       <ReactDiff inputA={ diffContent === 'config' ? diffBuildA.getIn(['circle_yml', 'string']) : JSON.stringify(diffBuildA, null, 2) }
         inputB={ diffContent === 'config' ? diffBuildB.getIn(['circle_yml', 'string']) : JSON.stringify(diffBuildB, null, 2) }

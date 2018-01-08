@@ -5,6 +5,7 @@
     "stage-0"
   ],
   "plugins": [
-    ["minify-dead-code-elimination", { "optimizeRawSize": true }]
+    ["minify-dead-code-elimination", { "optimizeRawSize": true }],
+    ["transform-function-bind"]
   ]
 }

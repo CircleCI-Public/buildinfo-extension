@@ -30,7 +30,13 @@
 		position: 'absolute',
 		pointerEvents: 'all',
 		bottom: '-30px',
+		borderTopRightRadius: '5px',
+		borderTopLeftRadius: '5px',
+		display: 'flex',
+		cursor: 'pointer',
+		justifyContent: 'center',
 		height: '50px',
+
 		width: '100px',
 	})
 	toggle.id = 'bi-toggle'

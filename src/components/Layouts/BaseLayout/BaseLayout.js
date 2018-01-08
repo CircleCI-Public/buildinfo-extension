@@ -1,12 +1,12 @@
 import React from 'react'
 import Nav from '../../Nav'
-import './assets/styles/BaseLayout.css'
+import styles from './assets/styles/BaseLayout.css'
 
 const BaseLayout = (props) => (
-  <div className='app-container'>
-    <div className='app'>
+  <div className={styles['app-container']}>
+    <div className={styles['app']}>
       <Nav />
-      <div className='content'>
+      <div className={styles['content']}>
         {props.children}
       </div>
     </div>

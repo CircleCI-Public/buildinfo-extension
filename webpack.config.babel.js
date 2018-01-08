@@ -17,8 +17,12 @@ export default (env={}) => {
     module: {
       rules: [
         { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' },
-        { test: /\.css$/, loader: 'style-loader!css-loader' },
-        { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' }
+        { test: /\.css$/, loader: ['style-loader', 
+          { loader: 'css-loader', options: { modules: true }}]
+        },
+        { test: /\.styl$/, loader: ['style-loader',
+          { loader: 'css-loader', options: { modules: true }}, 'stylus-loader'] 
+        }
       ]
     },
     plugins: [

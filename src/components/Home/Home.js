@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './assets/styles/Home.css'
+import styles from './assets/styles/Home.css'
 import { parseURL } from '../../utils'
 
 class App extends Component {
@@ -22,7 +22,7 @@ class App extends Component {
 
   render () {
     return (
-        <div className='starter-template'>
+        <div className={styles['starter-template']}>
           <h1>CircleCI BuildInfo</h1>
         </div>
     )

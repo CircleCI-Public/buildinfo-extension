@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import { parseURL } from '../../utils'
-import './assets/styles/Nav.css'
+import styles from './assets/styles/Nav.css'
 
 class Nav extends PureComponent {
   constructor(props) {
@@ -63,7 +63,7 @@ class Nav extends PureComponent {
   render() {
 
     return (
-      <nav className='bi-navbar'>
+      <nav className={styles['bi-navbar']}>
         BuildInfo
       </nav>
     )

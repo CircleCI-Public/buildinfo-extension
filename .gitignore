@@ -3,6 +3,7 @@ config.json
 coverage
 node_modules
 .idea/
+.vscode
 test-artifacts/
 build/
 tmp/
