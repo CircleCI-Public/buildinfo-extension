@@ -1,6 +1,6 @@
 export function parseURL(url) {
     // Let a blog post do the work
-    var parser = document.createElement('a'),
+    const parser = document.createElement('a'),
         searchObject = {},
         queries, split, i
     // Let the browser do the work
@@ -12,16 +12,10 @@ export function parseURL(url) {
         searchObject[split[0]] = split[1]
     }
 
-    let vcs = parser.pathname.split('/')[1].toLowerCase()
-    let vcsType
+    const vcs = parser.pathname.split('/')[1].toLowerCase()
+    const vcsType = vcs === 'gh' ? 'github' : vcs === 'bb' ? 'bitbucket' : ""
 
-    vcs === 'gh'
-      ? vcsType = 'github'
-      : vcs === 'bb'
-        ? vcsType = 'bitbucket'
-        : vcsType = '' //Should show an error I guess.
-
-    let circle = {
+    const circle = {
       vcsType:  vcsType,
       orgName: parser.pathname.split('/')[2],
       repoName: parser.pathname.split('/')[3],
