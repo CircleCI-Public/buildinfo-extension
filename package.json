@@ -33,7 +33,7 @@
   "dependencies": {
     "@fernfernfern/react-diff": "^0.0.8",
     "immutable": "^3.8.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.21",
     "moment": "^2.20.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
