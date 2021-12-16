@@ -43,7 +43,7 @@
     "react-router-dom": "^4.2.2",
     "react-stickynode": "^1.4.0",
     "redux": "^3.7.2",
-    "redux-devtools-extension": "^2.13.2",
+    "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^0.16.0"
   }
 }
