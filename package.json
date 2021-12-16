@@ -34,7 +34,7 @@
     "@fernfernfern/react-diff": "^0.0.8",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",
-    "moment": "^2.20.1",
+    "moment": "^2.29.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
