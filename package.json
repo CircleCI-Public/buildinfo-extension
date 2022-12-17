@@ -4,7 +4,9 @@
   "scripts": {
     "webpack": "webpack",
     "watch": "webpack --watch",
-    "build": "webpack --env.zip --env.prod"
+    "build": "webpack --env.zip --env.prod",
+    "prepare": "yarn run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -33,7 +35,7 @@
   "dependencies": {
     "@fernfernfern/react-diff": "^0.0.8",
     "immutable": "^3.8.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.20",
     "moment": "^2.20.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -44,6 +46,8 @@
     "react-stickynode": "^1.4.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "redux-saga": "^0.16.0"
-  }
+    "redux-saga": "^0.16.0",
+    "@snyk/protect": "latest"
+  },
+  "snyk": true
 }
